@@ -9,4 +9,7 @@ data class Currency(
     val code: String,
     @field:SerializedName("name")
     val name: String
-)
+
+) {
+    override fun toString(): String = code
+}

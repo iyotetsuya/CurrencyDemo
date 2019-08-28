@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+
+        <EditText
+            android:id="@+id/value_input"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:importantForAutofill="no"
+            android:inputType="numberDecimal"
+
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+<!--        android:text="@{viewModel.inputValue}"-->
+
+        <Spinner
+            android:id="@+id/currency_spinner"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:onItemSelected="@{(parent, view, position, id) -> viewModel.onCurrencySelected(position)}"
+            android:padding="@dimen/padding_small"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/currency_label"
+            app:layout_constraintTop_toBottomOf="@id/value_input"
+            app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+            tools:listitem="@layout/support_simple_spinner_dropdown_item"
+
+            />
+
+        <TextView
+            android:id="@+id/currency_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/margin_small"
+            android:padding="@dimen/padding_small"
+            android:text="@string/currency"
+            app:layout_constraintBottom_toBottomOf="@id/currency_spinner"
+            app:layout_constraintEnd_toStartOf="@id/currency_spinner"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@id/currency_spinner" />
+
+
+        <!--        <TextView-->
+        <!--            android:id="@+id/selected_currency"-->
+        <!--            android:layout_width="wrap_content"-->
+        <!--            android:layout_height="wrap_content"-->
+        <!--            android:text="@{@string/selected_currency(currencyCode)}"-->
+        <!--            app:layout_constraintStart_toStartOf="parent"-->
+        <!--            app:layout_constraintTop_toTopOf="parent"-->
+        <!--            tools:text="@string/selected_currency" />-->
+
+        <!--        <androidx.recyclerview.widget.RecyclerView-->
+        <!--            android:id="@+id/currency_list"-->
+        <!--            android:layout_width="match_parent"-->
+        <!--            android:layout_height="match_parent"-->
+        <!--            android:clipToPadding="false"-->
+        <!--            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"-->
+        <!--            tools:listitem="@layout/currency_item" />-->
+
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/quote_list"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:clipToPadding="false"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/currency_spinner"
+            tools:listitem="@layout/rate_item" />
+
+
+        <!--        <include-->
+        <!--            layout="@layout/loading_state"-->
+        <!--            android:layout_width="wrap_content"-->
+        <!--            android:layout_height="wrap_content"-->
+        <!--            android:layout_marginStart="8dp"-->
+        <!--            android:layout_marginTop="8dp"-->
+        <!--            android:layout_marginEnd="8dp"-->
+        <!--            android:layout_marginBottom="8dp"-->
+        <!--            app:callback="@{() -> retryCallback.retry()}"-->
+        <!--            app:layout_constraintBottom_toBottomOf="parent"-->
+        <!--            app:layout_constraintEnd_toEndOf="parent"-->
+        <!--            app:layout_constraintStart_toStartOf="parent"-->
+        <!--            app:layout_constraintTop_toTopOf="parent"-->
+        <!--            app:resource="@{(Resource)data}" />-->
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <data>
+
+        <variable
+            name="viewModel"
+            type="iyotetsuya.currencyconversion.ui.currency.CalculatorViewModel" />
+
+    </data>
+
+
+</layout>

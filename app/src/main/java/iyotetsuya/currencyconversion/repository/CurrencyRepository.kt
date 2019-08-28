@@ -6,10 +6,10 @@ import iyotetsuya.currencyconversion.api.CurrenciesResponse
 import iyotetsuya.currencyconversion.api.CurrencyLayerService
 import iyotetsuya.currencyconversion.api.QuotesResponse
 import iyotetsuya.currencyconversion.db.CurrencyDao
-import iyotetsuya.currencyconversion.db.QuoteDao
+import iyotetsuya.currencyconversion.db.CurrencyRateDao
 import iyotetsuya.currencyconversion.util.RateLimiter
 import iyotetsuya.currencyconversion.vo.Currency
-import iyotetsuya.currencyconversion.vo.Quote
+import iyotetsuya.currencyconversion.vo.CurrencyRate
 import iyotetsuya.currencyconversion.vo.Resource
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
@@ -18,7 +18,7 @@ import javax.inject.Singleton
 @Singleton
 class CurrencyRepository @Inject constructor(
     private val currencyDao: CurrencyDao,
-    private val quoteDao: QuoteDao,
+    private val currencyRateDao: CurrencyRateDao,
     private val appExecutors: AppExecutors,
     private val service: CurrencyLayerService
 ) {
@@ -51,20 +51,26 @@ class CurrencyRepository @Inject constructor(
         }.asLiveData()
     }
 
-    fun getQuotes(currencyCode: String): LiveData<Resource<List<Quote>>> {
-        return object : NetworkBoundResource<List<Quote>, QuotesResponse>(appExecutors) {
+    fun getQuotes(currencyCode: String): LiveData<Resource<List<CurrencyRate>>> {
+        return object : NetworkBoundResource<List<CurrencyRate>, QuotesResponse>(appExecutors) {
             override fun saveCallResult(item: QuotesResponse) {
                 item.quotes?.let {
-                    val result = item.quotes.toList().map { e -> Quote(e.first, e.second) }
-                    quoteDao.insertQuotes(result)
+                    val result = item.quotes.toList().map { e ->
+                        CurrencyRate(
+                            e.first.subSequence(0, 2).toString(),
+                            e.first.subSequence(3, 5).toString(),
+                            e.second
+                        )
+                    }
+                    currencyRateDao.insertQuotes(result)
                 }
             }
 
-            override fun shouldFetch(data: List<Quote>?): Boolean {
+            override fun shouldFetch(data: List<CurrencyRate>?): Boolean {
                 return data == null || data.isEmpty() || rateLimiter.shouldFetch(currencyCode)
             }
 
-            override fun loadFromDb() = quoteDao.getQuotes()
+            override fun loadFromDb() = currencyRateDao.getQuotes()
 
             override fun createCall() = service.getQuotes(currencyCode)
 

@@ -4,4 +4,5 @@
     <string name="unknown_error">Unknown Error</string>
     <string name="selected_currency">Selected currency: %1$s</string>
     <string name="put_number_here">put number here</string>
+    <string name="currency">Currency:</string>
 </resources>

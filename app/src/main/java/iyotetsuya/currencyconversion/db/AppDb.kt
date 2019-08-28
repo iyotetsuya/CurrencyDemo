@@ -5,14 +5,14 @@ import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 import iyotetsuya.currencyconversion.vo.Currency
-import iyotetsuya.currencyconversion.vo.Quote
+import iyotetsuya.currencyconversion.vo.CurrencyRate
 
-@Database(entities = [Currency::class, Quote::class], version = 3, exportSchema = false)
+@Database(entities = [Currency::class, CurrencyRate::class], version = 5, exportSchema = false)
 abstract class AppDb : RoomDatabase() {
 
     abstract fun currencyDao(): CurrencyDao
 
-    abstract fun quoteDao(): QuoteDao
+    abstract fun quoteDao(): CurrencyRateDao
 
     companion object {
         @Volatile

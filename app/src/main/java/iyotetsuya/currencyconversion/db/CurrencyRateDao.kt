@@ -5,15 +5,15 @@ import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
-import iyotetsuya.currencyconversion.vo.Quote
+import iyotetsuya.currencyconversion.vo.CurrencyRate
 
 @Dao
-abstract class QuoteDao {
+abstract class CurrencyRateDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    abstract fun insertQuotes(Quotes: List<Quote>)
+    abstract fun insertQuotes(currencyRates: List<CurrencyRate>)
 
-    @Query("SELECT * FROM Quote")
-    abstract fun getQuotes(): LiveData<List<Quote>>
+    @Query("SELECT * FROM CurrencyRate")
+    abstract fun getQuotes(): LiveData<List<CurrencyRate>>
 }
 

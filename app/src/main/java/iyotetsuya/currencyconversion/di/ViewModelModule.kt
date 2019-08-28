@@ -5,7 +5,7 @@ import androidx.lifecycle.ViewModelProvider
 import dagger.Binds
 import dagger.Module
 import dagger.multibindings.IntoMap
-import iyotetsuya.currencyconversion.ui.currency.CurrencyListViewModel
+import iyotetsuya.currencyconversion.ui.currency.CalculatorViewModel
 import iyotetsuya.currencyconversion.ui.currency.InputViewModel
 import iyotetsuya.currencyconversion.viewmodels.ViewModelFactory
 
@@ -14,8 +14,8 @@ import iyotetsuya.currencyconversion.viewmodels.ViewModelFactory
 abstract class ViewModelModule {
     @Binds
     @IntoMap
-    @ViewModelKey(CurrencyListViewModel::class)
-    abstract fun bindCurrencyListViewModel(currencyListViewModel: CurrencyListViewModel): ViewModel
+    @ViewModelKey(CalculatorViewModel::class)
+    abstract fun bindCurrencyListViewModel(calculatorViewModel: CalculatorViewModel): ViewModel
 
     @Binds
     @IntoMap

@@ -6,11 +6,12 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import iyotetsuya.currencyconversion.databinding.QuoteItemBinding
-import iyotetsuya.currencyconversion.vo.Quote
+import iyotetsuya.currencyconversion.vo.CurrencyRate
 
-class QuoteAdapter : ListAdapter<Quote, QuoteAdapter.ViewHolder>(QuoteDiffCallback()) {
+class CurrencyRateAdapter :
+    ListAdapter<CurrencyRate, CurrencyRateAdapter.ViewHolder>(QuoteDiffCallback()) {
 
-    var onItemClick: ((Quote) -> Unit)? = null
+    var onItemClick: ((CurrencyRate) -> Unit)? = null
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         return ViewHolder(
@@ -39,18 +40,18 @@ class QuoteAdapter : ListAdapter<Quote, QuoteAdapter.ViewHolder>(QuoteDiffCallba
             }
         }
 
-        fun bind(item: Quote) {
-            binding.quote = item
+        fun bind(item: CurrencyRate) {
+            binding.currencyRate = item
         }
     }
 }
 
-private class QuoteDiffCallback : DiffUtil.ItemCallback<Quote>() {
-    override fun areItemsTheSame(oldItem: Quote, newItem: Quote): Boolean {
-        return oldItem.name == newItem.name
+private class QuoteDiffCallback : DiffUtil.ItemCallback<CurrencyRate>() {
+    override fun areItemsTheSame(oldItem: CurrencyRate, newItem: CurrencyRate): Boolean {
+        return oldItem.target == newItem.target && oldItem.source == newItem.source
     }
 
-    override fun areContentsTheSame(oldItem: Quote, newItem: Quote): Boolean {
-        return oldItem.value == newItem.value
+    override fun areContentsTheSame(oldItem: CurrencyRate, newItem: CurrencyRate): Boolean {
+        return oldItem.rate == newItem.rate
     }
 }

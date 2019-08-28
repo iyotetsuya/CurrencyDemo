@@ -6,34 +6,33 @@ import androidx.lifecycle.Transformations
 import androidx.lifecycle.ViewModel
 import iyotetsuya.currencyconversion.repository.CurrencyRepository
 import iyotetsuya.currencyconversion.util.AbsentLiveData
+import iyotetsuya.currencyconversion.vo.Currency
 import iyotetsuya.currencyconversion.vo.CurrencyRate
 import iyotetsuya.currencyconversion.vo.Resource
 import javax.inject.Inject
 
-class InputViewModel @Inject constructor(currencyRepository: CurrencyRepository) :
+class CalculatorViewModel @Inject constructor(currencyRepository: CurrencyRepository) :
     ViewModel() {
 
+    val supportedCurrencies: LiveData<Resource<List<Currency>>> =
+        currencyRepository.getCurrencies()
 
-    var inputValue = MutableLiveData<String>()
-
-    private val _currencyCode = MutableLiveData<String>()
+    //    private val _currencyCode = MutableLiveData<String>()
+    private val selectedCurrency = MutableLiveData<Currency>()
 
     val quotes: LiveData<Resource<List<CurrencyRate>>> = Transformations
-        .switchMap(_currencyCode) { currencyCode ->
-            if (currencyCode == null) {
+        .switchMap(selectedCurrency) { currency ->
+            if (currency == null) {
                 AbsentLiveData.create()
             } else {
-                currencyRepository.getQuotes(currencyCode)
+                currencyRepository.getQuotes(currency.code)
             }
         }
 
-    fun setCurrency(currencyCode: String) {
-        if (_currencyCode.value != currencyCode) {
-            _currencyCode.postValue(currencyCode)
-        }
+
+    fun onCurrencySelected(position: Int) {
+        selectedCurrency.value = supportedCurrencies.value?.data?.get(position)
     }
 
-    init {
-        inputValue.value = "0"
-    }
+
 }

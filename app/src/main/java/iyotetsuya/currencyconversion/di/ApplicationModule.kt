@@ -9,7 +9,7 @@ import iyotetsuya.currencyconversion.api.CurrencyLayerService
 import iyotetsuya.currencyconversion.api.HTTPS_API_HOST
 import iyotetsuya.currencyconversion.db.AppDb
 import iyotetsuya.currencyconversion.db.CurrencyDao
-import iyotetsuya.currencyconversion.db.QuoteDao
+import iyotetsuya.currencyconversion.db.CurrencyRateDao
 import iyotetsuya.currencyconversion.util.LiveDataCallAdapterFactory
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
@@ -59,7 +59,7 @@ class ApplicationModule {
 
     @Singleton
     @Provides
-    fun provideQuoteDao(db: AppDb): QuoteDao {
+    fun provideQuoteDao(db: AppDb): CurrencyRateDao {
         return db.quoteDao()
     }
 

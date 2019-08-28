@@ -2,8 +2,6 @@ package iyotetsuya.currencyconversion.viewmodels
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import iyotetsuya.currencyconversion.repository.CurrencyRepository
-import iyotetsuya.currencyconversion.ui.currency.CurrencyListViewModel
 import javax.inject.Inject
 import javax.inject.Provider
 import javax.inject.Singleton
