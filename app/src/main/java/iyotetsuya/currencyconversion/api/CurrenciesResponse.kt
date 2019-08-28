@@ -6,5 +6,5 @@ data class CurrenciesResponse(
     val success: Boolean?,
     val terms: String?,
     val privacy: String?,
-    val currencies: List<Currency>?
+    val currencies: Map<String, String>?
 )

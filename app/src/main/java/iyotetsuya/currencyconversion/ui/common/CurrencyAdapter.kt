@@ -11,7 +11,7 @@ import iyotetsuya.currencyconversion.vo.Currency
 
 class CurrencyAdapter : ListAdapter<Currency, CurrencyAdapter.ViewHolder>(CurrencyDiffCallback()) {
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CurrencyAdapter.ViewHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         return ViewHolder(
             CurrencyItemBinding.inflate(
                 LayoutInflater.from(parent.context), parent, false
@@ -19,11 +19,11 @@ class CurrencyAdapter : ListAdapter<Currency, CurrencyAdapter.ViewHolder>(Curren
         )
     }
 
-    override fun onBindViewHolder(holder: CurrencyAdapter.ViewHolder, position: Int) {
-        val plant = getItem(position)
+    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
+        val currency = getItem(position)
         holder.apply {
-            bind(createOnClickListener(), plant)
-            itemView.tag = plant
+            bind(createOnClickListener(), currency)
+            itemView.tag = currency
         }
     }
 
@@ -37,6 +37,7 @@ class CurrencyAdapter : ListAdapter<Currency, CurrencyAdapter.ViewHolder>(Curren
         private val binding: CurrencyItemBinding
     ) : RecyclerView.ViewHolder(binding.root) {
         fun bind(listener: View.OnClickListener, item: Currency) {
+            binding.currency = item
         }
     }
 }

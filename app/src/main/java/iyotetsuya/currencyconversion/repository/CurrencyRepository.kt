@@ -28,7 +28,8 @@ class CurrencyRepository @Inject constructor(
         return object : NetworkBoundResource<List<Currency>, CurrenciesResponse>(appExecutors) {
             override fun saveCallResult(item: CurrenciesResponse) {
                 item.currencies?.let {
-                    currencyDao.insertCurrencies(it)
+                    val result = item.currencies.toList().map { e -> Currency(e.first, e.second) }
+                    currencyDao.insertCurrencies(result)
                 }
             }
 

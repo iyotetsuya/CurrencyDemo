@@ -11,6 +11,8 @@ import androidx.lifecycle.observe
 import iyotetsuya.currencyconversion.databinding.CurrencyListFragmentBinding
 import iyotetsuya.currencyconversion.di.Injectable
 import iyotetsuya.currencyconversion.ui.common.CurrencyAdapter
+import iyotetsuya.currencyconversion.ui.common.RetryCallback
+import iyotetsuya.currencyconversion.util.autoCleared
 import javax.inject.Inject
 
 class CurrencyListFragment : Fragment(), Injectable {
@@ -22,17 +24,32 @@ class CurrencyListFragment : Fragment(), Injectable {
         viewModelFactory
     }
 
+    var binding by autoCleared<CurrencyListFragmentBinding>()
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
 
-        val binding = CurrencyListFragmentBinding.inflate(inflater, container, false)
+        val dataBinding = CurrencyListFragmentBinding.inflate(inflater, container, false)
         val adapter = CurrencyAdapter()
-        binding.currencyList.adapter = adapter
+        dataBinding.currencyList.adapter = adapter
         subscribeUi(adapter)
-        return binding.root
+        dataBinding.retryCallback = object : RetryCallback {
+            override fun retry() {
+                viewModel.retry()
+            }
+        }
+        binding = dataBinding
+        return dataBinding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        viewModel.init()
+        binding.data = viewModel.currencies
+        binding.lifecycleOwner = viewLifecycleOwner
     }
 
     private fun subscribeUi(adapter: CurrencyAdapter) {
@@ -40,31 +57,5 @@ class CurrencyListFragment : Fragment(), Injectable {
             adapter.submitList(currencies.data)
         }
     }
-//
-//    override fun onActivityCreated(savedInstanceState: Bundle?) {
-//        super.onActivityCreated(savedInstanceState)
-////
-////        viewModel = ViewModelProviders.of(this, viewModelFactory)
-////            .get(CurrencyListViewModel::class.java)
-////
-//        val currencies = viewModel.currencies
-//        currencies.observe(this, Observer { list ->
-//            if (list?.data != null) {
-////                adapter.submitList(list.data)
-//            } else {
-////                adapter.submitList(emptyList())
-//            }
-//        })
-//////        val adapter = CurrencyAdapter(dataBindingComponent, appExecutors) { contributor ->
-//////            navController().navigate(
-//////                    RepoFragmentDirections.showUser(contributor.login)
-//////            )
-//////        }
-////
-////        this.adapter = adapter
-////
-//    }
-////
-////
-////    fun navController() = findNavController()
+
 }

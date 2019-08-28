@@ -23,7 +23,14 @@ class ApplicationModule {
     @Provides
     fun provideCurrencyLayerService(): CurrencyLayerService {
         val httpLogging = HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY)
-        val httpClientBuilder = OkHttpClient.Builder().addInterceptor(httpLogging)
+        val httpClientBuilder =
+            OkHttpClient.Builder().addInterceptor(httpLogging).addInterceptor { chain ->
+                var request = chain.request()
+                val url = request.url().newBuilder().addQueryParameter("access_key", "4df841079ee22fd1c97a3179d62d3640").build()
+                request = request.newBuilder().url(url).build()
+                chain.proceed(request)
+            }
+
         return Retrofit.Builder()
             .baseUrl(HTTPS_API_HOST)
             .addConverterFactory(GsonConverterFactory.create())
