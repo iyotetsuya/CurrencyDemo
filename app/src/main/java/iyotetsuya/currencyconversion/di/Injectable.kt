@@ -1,0 +1,3 @@
+package iyotetsuya.currencyconversion.di
+
+interface Injectable

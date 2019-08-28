@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <!--<data>-->
+
+        <!--<variable-->
+            <!--name="currency"-->
+            <!--type="iyotetsuya.currencyconversion.vo.Currency" />-->
+    <!--</data>-->
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/padding_small">
+
+        <!--<TextView-->
+            <!--android:id="@+id/currency_item_name"-->
+            <!--android:layout_width="0dp"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_marginEnd="@dimen/margin_small"-->
+            <!--android:text="@{currency.name}"-->
+            <!--android:textAppearance="?attr/textAppearanceListItem"-->
+            <!--app:layout_constraintBottom_toBottomOf="parent"-->
+            <!--app:layout_constraintEnd_toStartOf="@id/currency_item_value"-->
+            <!--app:layout_constraintStart_toStartOf="parent"-->
+            <!--tools:text="@sample/currency" />-->
+
+        <!--<TextView-->
+            <!--android:id="@+id/currency_item_value"-->
+            <!--android:layout_width="0dp"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:textAppearance="?attr/textAppearanceListItem"-->
+            <!--app:layout_constraintBottom_toBottomOf="parent"-->
+            <!--app:layout_constraintEnd_toEndOf="parent"-->
+            <!--tools:text="@sample/number" />-->
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>
