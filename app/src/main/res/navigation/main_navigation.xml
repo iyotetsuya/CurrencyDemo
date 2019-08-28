@@ -6,7 +6,19 @@
     <fragment
         android:id="@+id/currencyListFragment"
         android:name="iyotetsuya.currencyconversion.ui.currency.CurrencyListFragment"
-        android:label="CurrencyListFragment" />
+        android:label="CurrencyListFragment">
+        <action
+            android:id="@+id/action_currencyListFragment_to_inputFragment"
+            app:destination="@id/inputFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/inputFragment"
+        android:name="iyotetsuya.currencyconversion.ui.currency.InputFragment"
+        android:label="InputFragment">
+        <argument
+            android:name="currencyCode"
+            app:argType="string" />
+    </fragment>
 
 
 </navigation>

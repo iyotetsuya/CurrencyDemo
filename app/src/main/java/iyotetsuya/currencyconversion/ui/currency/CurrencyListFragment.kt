@@ -8,6 +8,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.observe
+import androidx.navigation.fragment.findNavController
 import iyotetsuya.currencyconversion.databinding.CurrencyListFragmentBinding
 import iyotetsuya.currencyconversion.di.Injectable
 import iyotetsuya.currencyconversion.ui.common.CurrencyAdapter
@@ -34,6 +35,11 @@ class CurrencyListFragment : Fragment(), Injectable {
 
         val dataBinding = CurrencyListFragmentBinding.inflate(inflater, container, false)
         val adapter = CurrencyAdapter()
+        adapter.onItemClick = { currency ->
+            val action =
+                CurrencyListFragmentDirections.actionCurrencyListFragmentToInputFragment(currency.code)
+            findNavController().navigate(action)
+        }
         dataBinding.currencyList.adapter = adapter
         subscribeUi(adapter)
         dataBinding.retryCallback = object : RetryCallback {
