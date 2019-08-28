@@ -51,7 +51,7 @@ class CurrencyRepository @Inject constructor(
         }.asLiveData()
     }
 
-    fun getQuotes(currencyCode: String): LiveData<Resource<List<CurrencyRate>>> {
+    fun getCurrencyRateList(currencyCode: String): LiveData<Resource<List<CurrencyRate>>> {
         return object : NetworkBoundResource<List<CurrencyRate>, QuotesResponse>(appExecutors) {
             override fun saveCallResult(item: QuotesResponse) {
                 item.quotes?.let {
@@ -70,7 +70,7 @@ class CurrencyRepository @Inject constructor(
                 return data == null || data.isEmpty() || rateLimiter.shouldFetch(currencyCode)
             }
 
-            override fun loadFromDb() = currencyRateDao.getQuotes()
+            override fun loadFromDb() = currencyRateDao.getQuotes(currencyCode)
 
             override fun createCall() = service.getQuotes(currencyCode)
 

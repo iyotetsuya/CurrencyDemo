@@ -13,7 +13,7 @@ abstract class CurrencyRateDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     abstract fun insertQuotes(currencyRates: List<CurrencyRate>)
 
-    @Query("SELECT * FROM CurrencyRate")
-    abstract fun getQuotes(): LiveData<List<CurrencyRate>>
+    @Query("SELECT * FROM CurrencyRate WHERE source = :source")
+    abstract fun getQuotes(source: String): LiveData<List<CurrencyRate>>
 }
 

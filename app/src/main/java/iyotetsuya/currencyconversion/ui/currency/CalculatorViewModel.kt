@@ -25,7 +25,7 @@ class CalculatorViewModel @Inject constructor(currencyRepository: CurrencyReposi
             if (currency == null) {
                 AbsentLiveData.create()
             } else {
-                currencyRepository.getQuotes(currency.code)
+                currencyRepository.getCurrencyRateList(currency.code)
             }
         }
 

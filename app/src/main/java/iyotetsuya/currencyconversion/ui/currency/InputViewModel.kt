@@ -23,7 +23,7 @@ class InputViewModel @Inject constructor(currencyRepository: CurrencyRepository)
             if (currencyCode == null) {
                 AbsentLiveData.create()
             } else {
-                currencyRepository.getQuotes(currencyCode)
+                currencyRepository.getCurrencyRateList(currencyCode)
             }
         }
 
