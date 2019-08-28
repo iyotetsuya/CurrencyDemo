@@ -25,7 +25,7 @@ class CurrencyListViewModel @Inject constructor(currencyRepository: CurrencyRepo
 
     fun init() {
         if (_init.value != true) {
-            _init.value = true
+            _init.postValue(true)
         }
     }
 

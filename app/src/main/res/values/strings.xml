@@ -3,4 +3,5 @@
     <string name="retry">Retry</string>
     <string name="unknown_error">Unknown Error</string>
     <string name="selected_currency">Selected currency: %1$s</string>
+    <string name="put_number_here">put number here</string>
 </resources>

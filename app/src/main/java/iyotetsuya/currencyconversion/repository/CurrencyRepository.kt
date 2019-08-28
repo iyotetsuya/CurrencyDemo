@@ -4,9 +4,12 @@ import androidx.lifecycle.LiveData
 import iyotetsuya.currencyconversion.AppExecutors
 import iyotetsuya.currencyconversion.api.CurrenciesResponse
 import iyotetsuya.currencyconversion.api.CurrencyLayerService
+import iyotetsuya.currencyconversion.api.QuotesResponse
 import iyotetsuya.currencyconversion.db.CurrencyDao
+import iyotetsuya.currencyconversion.db.QuoteDao
 import iyotetsuya.currencyconversion.util.RateLimiter
 import iyotetsuya.currencyconversion.vo.Currency
+import iyotetsuya.currencyconversion.vo.Quote
 import iyotetsuya.currencyconversion.vo.Resource
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
@@ -15,6 +18,7 @@ import javax.inject.Singleton
 @Singleton
 class CurrencyRepository @Inject constructor(
     private val currencyDao: CurrencyDao,
+    private val quoteDao: QuoteDao,
     private val appExecutors: AppExecutors,
     private val service: CurrencyLayerService
 ) {
@@ -43,6 +47,29 @@ class CurrencyRepository @Inject constructor(
 
             override fun onFetchFailed() {
                 rateLimiter.reset(CURRENCIES_KEY)
+            }
+        }.asLiveData()
+    }
+
+    fun getQuotes(currencyCode: String): LiveData<Resource<List<Quote>>> {
+        return object : NetworkBoundResource<List<Quote>, QuotesResponse>(appExecutors) {
+            override fun saveCallResult(item: QuotesResponse) {
+                item.quotes?.let {
+                    val result = item.quotes.toList().map { e -> Quote(e.first, e.second) }
+                    quoteDao.insertQuotes(result)
+                }
+            }
+
+            override fun shouldFetch(data: List<Quote>?): Boolean {
+                return data == null || data.isEmpty() || rateLimiter.shouldFetch(currencyCode)
+            }
+
+            override fun loadFromDb() = quoteDao.getQuotes()
+
+            override fun createCall() = service.getQuotes(currencyCode)
+
+            override fun onFetchFailed() {
+                rateLimiter.reset(currencyCode)
             }
         }.asLiveData()
     }

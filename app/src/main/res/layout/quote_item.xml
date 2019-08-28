@@ -9,34 +9,34 @@
         android:padding="@dimen/padding_small">
 
         <TextView
-            android:id="@+id/currency_item_name"
+            android:id="@+id/quote_item_name"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginEnd="@dimen/margin_small"
-            android:text="@{currency.name}"
+            android:text="@{quote.name}"
             android:textAppearance="?attr/textAppearanceListItem"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@id/currency_item_value"
+            app:layout_constraintEnd_toStartOf="@id/quote_item_value"
             app:layout_constraintStart_toStartOf="parent"
-            tools:text="@sample/currency" />
+            tools:text="@sample/code" />
 
         <TextView
-            android:id="@+id/currency_item_value"
+            android:id="@+id/quote_item_value"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="@{currency.code}"
+            android:text="@{String.valueOf(quote.value)}"
             android:textAppearance="?attr/textAppearanceListItem"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            tools:text="@sample/code" />
+            tools:text="@sample/number" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <data>
 
         <variable
-            name="currency"
-            type="iyotetsuya.currencyconversion.vo.Currency" />
+            name="quote"
+            type="iyotetsuya.currencyconversion.vo.Quote" />
     </data>
 
 </layout>

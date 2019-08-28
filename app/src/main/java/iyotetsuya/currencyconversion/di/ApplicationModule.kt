@@ -9,6 +9,7 @@ import iyotetsuya.currencyconversion.api.CurrencyLayerService
 import iyotetsuya.currencyconversion.api.HTTPS_API_HOST
 import iyotetsuya.currencyconversion.db.AppDb
 import iyotetsuya.currencyconversion.db.CurrencyDao
+import iyotetsuya.currencyconversion.db.QuoteDao
 import iyotetsuya.currencyconversion.util.LiveDataCallAdapterFactory
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
@@ -26,7 +27,8 @@ class ApplicationModule {
         val httpClientBuilder =
             OkHttpClient.Builder().addInterceptor(httpLogging).addInterceptor { chain ->
                 var request = chain.request()
-                val url = request.url().newBuilder().addQueryParameter("access_key", "4df841079ee22fd1c97a3179d62d3640").build()
+                val url = request.url().newBuilder()
+                    .addQueryParameter("access_key", "4df841079ee22fd1c97a3179d62d3640").build()
                 request = request.newBuilder().url(url).build()
                 chain.proceed(request)
             }
@@ -45,7 +47,7 @@ class ApplicationModule {
     fun provideDb(context: CurrencyApp): AppDb {
         return Room
             .databaseBuilder(context, AppDb::class.java, "app.db")
-//            .fallbackToDestructiveMigration()
+            .fallbackToDestructiveMigration()
             .build()
     }
 
@@ -54,4 +56,12 @@ class ApplicationModule {
     fun provideCurrencyDao(db: AppDb): CurrencyDao {
         return db.currencyDao()
     }
+
+    @Singleton
+    @Provides
+    fun provideQuoteDao(db: AppDb): QuoteDao {
+        return db.quoteDao()
+    }
+
+
 }
