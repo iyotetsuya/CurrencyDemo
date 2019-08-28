@@ -21,7 +21,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-<!--        android:text="@{viewModel.inputValue}"-->
+        <!--        android:text="@{viewModel.inputValue}"-->
 
         <Spinner
             android:id="@+id/currency_spinner"
@@ -69,7 +69,7 @@
 
 
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/quote_list"
+            android:id="@+id/currency_rate_list"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:clipToPadding="false"
@@ -78,24 +78,30 @@
             app:layout_constraintTop_toBottomOf="@id/currency_spinner"
             tools:listitem="@layout/rate_item" />
 
-
-        <!--        <include-->
-        <!--            layout="@layout/loading_state"-->
-        <!--            android:layout_width="wrap_content"-->
-        <!--            android:layout_height="wrap_content"-->
-        <!--            android:layout_marginStart="8dp"-->
-        <!--            android:layout_marginTop="8dp"-->
-        <!--            android:layout_marginEnd="8dp"-->
-        <!--            android:layout_marginBottom="8dp"-->
-        <!--            app:callback="@{() -> retryCallback.retry()}"-->
-        <!--            app:layout_constraintBottom_toBottomOf="parent"-->
-        <!--            app:layout_constraintEnd_toEndOf="parent"-->
-        <!--            app:layout_constraintStart_toStartOf="parent"-->
-        <!--            app:layout_constraintTop_toTopOf="parent"-->
-        <!--            app:resource="@{(Resource)data}" />-->
+        <include
+            android:id="@+id/currency_rate_loading"
+            layout="@layout/loading_state"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginBottom="8dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@id/currency_rate_list"
+            app:resource="@{resource}" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <data>
+
+        <import type="iyotetsuya.currencyconversion.vo.Resource" />
+
+
+        <variable
+            name="resource"
+            type="Resource" />
 
         <variable
             name="viewModel"

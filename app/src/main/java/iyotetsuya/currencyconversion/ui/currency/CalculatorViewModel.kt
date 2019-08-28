@@ -14,13 +14,13 @@ import javax.inject.Inject
 class CalculatorViewModel @Inject constructor(currencyRepository: CurrencyRepository) :
     ViewModel() {
 
+    private val selectedCurrency = MutableLiveData<Currency>()
+
     val supportedCurrencies: LiveData<Resource<List<Currency>>> =
         currencyRepository.getCurrencies()
 
-    //    private val _currencyCode = MutableLiveData<String>()
-    private val selectedCurrency = MutableLiveData<Currency>()
 
-    val quotes: LiveData<Resource<List<CurrencyRate>>> = Transformations
+    val currencyRateList: LiveData<Resource<List<CurrencyRate>>> = Transformations
         .switchMap(selectedCurrency) { currency ->
             if (currency == null) {
                 AbsentLiveData.create()
@@ -29,10 +29,14 @@ class CalculatorViewModel @Inject constructor(currencyRepository: CurrencyReposi
             }
         }
 
-
     fun onCurrencySelected(position: Int) {
         selectedCurrency.value = supportedCurrencies.value?.data?.get(position)
     }
 
+    fun retry() {
+        selectedCurrency.value?.let {
+            selectedCurrency.value = it
+        }
+    }
 
 }

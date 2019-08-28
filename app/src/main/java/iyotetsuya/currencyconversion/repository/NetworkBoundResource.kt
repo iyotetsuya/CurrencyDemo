@@ -5,13 +5,10 @@ import androidx.annotation.WorkerThread
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MediatorLiveData
 import iyotetsuya.currencyconversion.AppExecutors
+import iyotetsuya.currencyconversion.api.*
 import iyotetsuya.currencyconversion.vo.Resource
-import iyotetsuya.currencyconversion.api.ApiEmptyResponse
-import iyotetsuya.currencyconversion.api.ApiErrorResponse
-import iyotetsuya.currencyconversion.api.ApiResponse
-import iyotetsuya.currencyconversion.api.ApiSuccessResponse
 
-abstract class NetworkBoundResource<ResultType, RequestType>
+abstract class NetworkBoundResource<ResultType, RequestType : BaseResponse>
 @MainThread constructor(private val appExecutors: AppExecutors) {
 
     private val result = MediatorLiveData<Resource<ResultType>>()
@@ -50,10 +47,22 @@ abstract class NetworkBoundResource<ResultType, RequestType>
             when (response) {
                 is ApiSuccessResponse -> {
                     appExecutors.diskIO().execute {
-                        saveCallResult(processResponse(response))
-                        appExecutors.mainThread().execute {
-                            result.addSource(loadFromDb()) { newData ->
-                                setValue(Resource.success(newData))
+                        val baseResponse = processResponse(response)
+                        if (baseResponse.success) {
+                            saveCallResult(baseResponse)
+                            appExecutors.mainThread().execute {
+                                result.addSource(loadFromDb()) { newData ->
+                                    setValue(Resource.success(newData))
+                                }
+                            }
+                        } else {
+                            onFetchFailed()
+                            appExecutors.mainThread().execute {
+                                result.addSource(dbSource) { newData ->
+                                    val message: String =
+                                        baseResponse.error?.info ?: "Unknown error"
+                                    setValue(Resource.error(message, newData))
+                                }
                             }
                         }
                     }

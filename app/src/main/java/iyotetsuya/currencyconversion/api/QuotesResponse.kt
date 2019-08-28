@@ -1,7 +1,8 @@
 package iyotetsuya.currencyconversion.api
 
 data class QuotesResponse(
-    val success: Boolean?,
+    override val success: Boolean,
+    override val error: Error?,
     val terms: String?,
     val privacy: String?,
     val historical: Boolean?,
@@ -9,4 +10,4 @@ data class QuotesResponse(
     val timestamp: String?,
     val source: String?,
     val quotes: Map<String, Float>?
-)
+) : BaseResponse()

@@ -57,12 +57,12 @@ class CurrencyRepository @Inject constructor(
                 item.quotes?.let {
                     val result = item.quotes.toList().map { e ->
                         CurrencyRate(
-                            e.first.subSequence(0, 2).toString(),
-                            e.first.subSequence(3, 5).toString(),
+                            e.first.subSequence(0, 3).toString(),
+                            e.first.subSequence(3, 6).toString(),
                             e.second
                         )
                     }
-                    currencyRateDao.insertQuotes(result)
+                    currencyRateDao.insertCurrencyRate(result)
                 }
             }
 
@@ -70,7 +70,7 @@ class CurrencyRepository @Inject constructor(
                 return data == null || data.isEmpty() || rateLimiter.shouldFetch(currencyCode)
             }
 
-            override fun loadFromDb() = currencyRateDao.getQuotes(currencyCode)
+            override fun loadFromDb() = currencyRateDao.getCurrencyRateList(currencyCode)
 
             override fun createCall() = service.getQuotes(currencyCode)
 

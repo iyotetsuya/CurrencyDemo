@@ -11,9 +11,9 @@ import iyotetsuya.currencyconversion.vo.CurrencyRate
 abstract class CurrencyRateDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    abstract fun insertQuotes(currencyRates: List<CurrencyRate>)
+    abstract fun insertCurrencyRate(currencyRates: List<CurrencyRate>)
 
     @Query("SELECT * FROM CurrencyRate WHERE source = :source")
-    abstract fun getQuotes(source: String): LiveData<List<CurrencyRate>>
+    abstract fun getCurrencyRateList(source: String): LiveData<List<CurrencyRate>>
 }
 

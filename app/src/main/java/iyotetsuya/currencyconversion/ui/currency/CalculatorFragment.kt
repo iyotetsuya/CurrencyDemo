@@ -13,6 +13,7 @@ import androidx.lifecycle.observe
 import iyotetsuya.currencyconversion.databinding.CalculatorFragmentBinding
 import iyotetsuya.currencyconversion.di.Injectable
 import iyotetsuya.currencyconversion.ui.common.CurrencyRateAdapter
+import iyotetsuya.currencyconversion.ui.common.RetryCallback
 import iyotetsuya.currencyconversion.util.autoCleared
 import iyotetsuya.currencyconversion.vo.Currency
 import javax.inject.Inject
@@ -34,6 +35,11 @@ class CalculatorFragment : Fragment(), Injectable {
         savedInstanceState: Bundle?
     ): View? {
         val dataBinding = CalculatorFragmentBinding.inflate(inflater, container, false)
+        dataBinding.currencyRateLoading.callback = object : RetryCallback {
+            override fun retry() {
+                viewModel.retry()
+            }
+        }
         binding = dataBinding
         return dataBinding.root
     }
@@ -48,8 +54,8 @@ class CalculatorFragment : Fragment(), Injectable {
     }
 
     private fun setSpinnerData() {
-        viewModel.supportedCurrencies.observe(viewLifecycleOwner) { currency ->
-            currency.data?.let {
+        viewModel.supportedCurrencies.observe(viewLifecycleOwner) { resource ->
+            resource.data?.let {
                 val adapter = ArrayAdapter<Currency>(
                     this.context!!,
                     android.R.layout.simple_spinner_item,
@@ -62,9 +68,12 @@ class CalculatorFragment : Fragment(), Injectable {
 
     private fun setResult() {
         val adapter = CurrencyRateAdapter()
-        binding.quoteList.adapter = adapter
-        viewModel.quotes.observe(viewLifecycleOwner) { quotes ->
-            adapter.submitList(quotes.data)
+        binding.currencyRateList.adapter = adapter
+        viewModel.currencyRateList.observe(viewLifecycleOwner) { resource ->
+            binding.resource = resource
+            resource.data?.let {
+                adapter.submitList(it)
+            }
         }
 
     }
