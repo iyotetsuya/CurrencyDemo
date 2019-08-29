@@ -1,6 +1,5 @@
 package iyotetsuya.currencyconversion.di
 
-
 import androidx.room.Room
 import dagger.Module
 import dagger.Provides
@@ -17,7 +16,6 @@ import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import javax.inject.Singleton
-
 
 @Module(includes = [ViewModelModule::class])
 class ApplicationModule {
@@ -63,6 +61,5 @@ class ApplicationModule {
     fun provideCurrencyRateDao(db: AppDb): CurrencyRateDao {
         return db.currencyRateDao()
     }
-
 
 }

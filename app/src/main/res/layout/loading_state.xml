@@ -45,6 +45,6 @@
 
         <variable
             name="callback"
-            type="iyotetsuya.currencyconversion.ui.common.RetryCallback" />
+            type="iyotetsuya.currencyconversion.ui.currency.RetryCallback" />
     </data>
 </layout>

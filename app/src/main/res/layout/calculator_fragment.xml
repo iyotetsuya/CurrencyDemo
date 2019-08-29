@@ -56,7 +56,7 @@
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintTop_toBottomOf="@id/currency_spinner"
-            tools:listitem="@layout/rate_item" />
+            tools:listitem="@layout/calculator_item" />
 
         <include
             android:id="@+id/currency_rate_loading"

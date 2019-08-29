@@ -1,4 +1,4 @@
-package iyotetsuya.currencyconversion
+package iyotetsuya.currencyconversion.util
 
 import android.os.Handler
 import android.os.Looper

@@ -4,10 +4,14 @@ import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
-import iyotetsuya.currencyconversion.vo.SupportedCurrency
 import iyotetsuya.currencyconversion.vo.CurrencyRate
+import iyotetsuya.currencyconversion.vo.SupportedCurrency
 
-@Database(entities = [SupportedCurrency::class, CurrencyRate::class], version = 6, exportSchema = false)
+@Database(
+    entities = [SupportedCurrency::class, CurrencyRate::class],
+    version = 6,
+    exportSchema = false
+)
 abstract class AppDb : RoomDatabase() {
 
     abstract fun supportedCurrencyDao(): SupportedCurrencyDao
@@ -26,7 +30,6 @@ abstract class AppDb : RoomDatabase() {
 
         private fun buildDatabase(context: Context): AppDb {
             return Room.databaseBuilder(context, AppDb::class.java, "app-db")
-
                 .build()
         }
     }

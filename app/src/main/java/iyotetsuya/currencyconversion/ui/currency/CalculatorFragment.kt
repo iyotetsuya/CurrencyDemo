@@ -1,6 +1,5 @@
 package iyotetsuya.currencyconversion.ui.currency
 
-
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -12,8 +11,6 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.observe
 import iyotetsuya.currencyconversion.databinding.CalculatorFragmentBinding
 import iyotetsuya.currencyconversion.di.Injectable
-import iyotetsuya.currencyconversion.ui.common.ExchangeResultAdapter
-import iyotetsuya.currencyconversion.ui.common.RetryCallback
 import iyotetsuya.currencyconversion.util.autoCleared
 import iyotetsuya.currencyconversion.vo.SupportedCurrency
 import javax.inject.Inject
@@ -35,7 +32,8 @@ class CalculatorFragment : Fragment(), Injectable {
         savedInstanceState: Bundle?
     ): View? {
         val dataBinding = CalculatorFragmentBinding.inflate(inflater, container, false)
-        dataBinding.currencyRateLoading.callback = object : RetryCallback {
+        dataBinding.currencyRateLoading.callback = object :
+            RetryCallback {
             override fun retry() {
                 viewModel.retry()
             }

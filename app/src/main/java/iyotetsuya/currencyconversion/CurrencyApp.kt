@@ -6,7 +6,6 @@ import dagger.android.HasAndroidInjector
 import iyotetsuya.currencyconversion.di.AppInjector
 import javax.inject.Inject
 
-
 class CurrencyApp : Application(), HasAndroidInjector {
 
     @Inject

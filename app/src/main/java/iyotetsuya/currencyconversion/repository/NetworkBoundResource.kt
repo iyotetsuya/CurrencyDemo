@@ -4,7 +4,7 @@ import androidx.annotation.MainThread
 import androidx.annotation.WorkerThread
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MediatorLiveData
-import iyotetsuya.currencyconversion.AppExecutors
+import iyotetsuya.currencyconversion.util.AppExecutors
 import iyotetsuya.currencyconversion.api.*
 import iyotetsuya.currencyconversion.vo.Resource
 

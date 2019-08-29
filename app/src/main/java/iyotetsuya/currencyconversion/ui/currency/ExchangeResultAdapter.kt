@@ -1,4 +1,4 @@
-package  iyotetsuya.currencyconversion.ui.common
+package  iyotetsuya.currencyconversion.ui.currency
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -9,7 +9,9 @@ import iyotetsuya.currencyconversion.databinding.CalculatorItemBinding
 import iyotetsuya.currencyconversion.ui.currency.CalculatorViewModel.ExchangeResult
 
 class ExchangeResultAdapter :
-    ListAdapter<ExchangeResult, ExchangeResultAdapter.ViewHolder>(ExangeResultDiffCallback()) {
+    ListAdapter<ExchangeResult, ExchangeResultAdapter.ViewHolder>(
+        ExchangeResultDiffCallback()
+    ) {
 
     var onItemClick: ((ExchangeResult) -> Unit)? = null
 
@@ -46,7 +48,7 @@ class ExchangeResultAdapter :
     }
 }
 
-private class ExangeResultDiffCallback : DiffUtil.ItemCallback<ExchangeResult>() {
+private class ExchangeResultDiffCallback : DiffUtil.ItemCallback<ExchangeResult>() {
     override fun areItemsTheSame(oldItem: ExchangeResult, newItem: ExchangeResult): Boolean {
         return oldItem.currencyCode == newItem.currencyCode
     }

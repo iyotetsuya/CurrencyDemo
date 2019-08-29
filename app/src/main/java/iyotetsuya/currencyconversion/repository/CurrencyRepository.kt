@@ -1,16 +1,16 @@
 package iyotetsuya.currencyconversion.repository
 
 import androidx.lifecycle.LiveData
-import iyotetsuya.currencyconversion.AppExecutors
-import iyotetsuya.currencyconversion.api.ListResponse
+import iyotetsuya.currencyconversion.util.AppExecutors
 import iyotetsuya.currencyconversion.api.CurrencyLayerService
+import iyotetsuya.currencyconversion.api.ListResponse
 import iyotetsuya.currencyconversion.api.LiveResponse
-import iyotetsuya.currencyconversion.db.SupportedCurrencyDao
 import iyotetsuya.currencyconversion.db.CurrencyRateDao
+import iyotetsuya.currencyconversion.db.SupportedCurrencyDao
 import iyotetsuya.currencyconversion.util.RateLimiter
-import iyotetsuya.currencyconversion.vo.SupportedCurrency
 import iyotetsuya.currencyconversion.vo.CurrencyRate
 import iyotetsuya.currencyconversion.vo.Resource
+import iyotetsuya.currencyconversion.vo.SupportedCurrency
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -32,7 +32,8 @@ class CurrencyRepository @Inject constructor(
         return object : NetworkBoundResource<List<SupportedCurrency>, ListResponse>(appExecutors) {
             override fun saveCallResult(item: ListResponse) {
                 item.currencies?.let {
-                    val result = item.currencies.toList().map { e -> SupportedCurrency(e.first, e.second) }
+                    val result =
+                        item.currencies.toList().map { e -> SupportedCurrency(e.first, e.second) }
                     supportedCurrencyDao.insertCurrencies(result)
                 }
             }
