@@ -4,12 +4,13 @@ package iyotetsuya.currencyconversion.di
 import androidx.room.Room
 import dagger.Module
 import dagger.Provides
+import iyotetsuya.currencyconversion.BuildConfig
 import iyotetsuya.currencyconversion.CurrencyApp
 import iyotetsuya.currencyconversion.api.CurrencyLayerService
 import iyotetsuya.currencyconversion.api.HTTPS_API_HOST
 import iyotetsuya.currencyconversion.db.AppDb
-import iyotetsuya.currencyconversion.db.SupportedCurrencyDao
 import iyotetsuya.currencyconversion.db.CurrencyRateDao
+import iyotetsuya.currencyconversion.db.SupportedCurrencyDao
 import iyotetsuya.currencyconversion.util.LiveDataCallAdapterFactory
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
@@ -28,7 +29,7 @@ class ApplicationModule {
             OkHttpClient.Builder().addInterceptor(httpLogging).addInterceptor { chain ->
                 var request = chain.request()
                 val url = request.url().newBuilder()
-                    .addQueryParameter("access_key", "4df841079ee22fd1c97a3179d62d3640").build()
+                    .addQueryParameter("access_key", BuildConfig.CURRENCY_LAYER_KEY).build()
                 request = request.newBuilder().url(url).build()
                 chain.proceed(request)
             }

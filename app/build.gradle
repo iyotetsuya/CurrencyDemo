@@ -17,6 +17,10 @@ android {
         versionCode 1
         versionName "0.0.1"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        def properties = new Properties()
+        properties.load(project.rootProject.file('local.properties').newDataInputStream())
+        def CURRENCY_LAYER_KEY = properties.getProperty("currency_layer_key")
+        buildConfigField("String", "CURRENCY_LAYER_KEY", "\"${CURRENCY_LAYER_KEY}\"")
     }
     buildTypes {
         release {
