@@ -13,7 +13,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginEnd="@dimen/margin_small"
-            android:text="@{currency.name}"
+            android:text="@{supportedCurrency.name}"
             android:textAppearance="?attr/textAppearanceListItem"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@id/currency_item_value"
@@ -24,7 +24,7 @@
             android:id="@+id/currency_item_value"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="@{currency.code}"
+            android:text="@{supportedCurrency.code}"
             android:textAppearance="?attr/textAppearanceListItem"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
@@ -35,8 +35,8 @@
     <data>
 
         <variable
-            name="currency"
-            type="iyotetsuya.currencyconversion.vo.Currency" />
+            name="supportedCurrency"
+            type="iyotetsuya.currencyconversion.vo.SupportedCurrency" />
     </data>
 
 </layout>

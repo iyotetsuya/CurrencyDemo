@@ -4,7 +4,7 @@ import androidx.room.Entity
 import com.google.gson.annotations.SerializedName
 
 @Entity(primaryKeys = ["code"])
-data class Currency(
+data class SupportedCurrency(
     @field:SerializedName("code")
     val code: String,
     @field:SerializedName("name")

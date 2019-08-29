@@ -13,7 +13,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="@dimen/margin_small"
-            android:text="@{currencyRate.target}"
+            android:text="@{exchangeResult.currencyCode}"
             android:textAppearance="?attr/textAppearanceListItem"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -24,7 +24,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:gravity="end"
-            android:text="@{String.valueOf(currencyRate.rate)}"
+            android:text="@{String.valueOf(exchangeResult.value)}"
             android:textAppearance="?attr/textAppearanceListItem"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
@@ -36,8 +36,8 @@
     <data>
 
         <variable
-            name="currencyRate"
-            type="iyotetsuya.currencyconversion.vo.CurrencyRate" />
+            name="exchangeResult"
+            type="iyotetsuya.currencyconversion.ui.currency.CalculatorViewModel.ExchangeResult" />
     </data>
 
 </layout>

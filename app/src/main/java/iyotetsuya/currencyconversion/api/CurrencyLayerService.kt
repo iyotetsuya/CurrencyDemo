@@ -8,8 +8,8 @@ const val HTTPS_API_HOST = "http://apilayer.net/api/"
 
 interface CurrencyLayerService {
     @GET("list")
-    fun getSupportedCurrencies(): LiveData<ApiResponse<CurrenciesResponse>>
+    fun getList(): LiveData<ApiResponse<ListResponse>>
 
     @GET("live")
-    fun getQuotes(@Query("source") source: String): LiveData<ApiResponse<QuotesResponse>>
+    fun getLive(@Query("source") source: String): LiveData<ApiResponse<LiveResponse>>
 }

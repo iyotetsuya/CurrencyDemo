@@ -1,10 +1,13 @@
 package iyotetsuya.currencyconversion.api
 
-data class CurrenciesResponse(
+data class LiveResponse(
     override val success: Boolean,
     override val error: Error?,
-
     val terms: String?,
     val privacy: String?,
-    val currencies: Map<String, String>?
+    val historical: Boolean?,
+    val date: String?,
+    val timestamp: String?,
+    val source: String?,
+    val quotes: Map<String, Float>?
 ) : BaseResponse()

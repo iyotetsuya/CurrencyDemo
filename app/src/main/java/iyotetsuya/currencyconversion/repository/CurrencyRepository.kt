@@ -2,13 +2,13 @@ package iyotetsuya.currencyconversion.repository
 
 import androidx.lifecycle.LiveData
 import iyotetsuya.currencyconversion.AppExecutors
-import iyotetsuya.currencyconversion.api.CurrenciesResponse
+import iyotetsuya.currencyconversion.api.ListResponse
 import iyotetsuya.currencyconversion.api.CurrencyLayerService
-import iyotetsuya.currencyconversion.api.QuotesResponse
-import iyotetsuya.currencyconversion.db.CurrencyDao
+import iyotetsuya.currencyconversion.api.LiveResponse
+import iyotetsuya.currencyconversion.db.SupportedCurrencyDao
 import iyotetsuya.currencyconversion.db.CurrencyRateDao
 import iyotetsuya.currencyconversion.util.RateLimiter
-import iyotetsuya.currencyconversion.vo.Currency
+import iyotetsuya.currencyconversion.vo.SupportedCurrency
 import iyotetsuya.currencyconversion.vo.CurrencyRate
 import iyotetsuya.currencyconversion.vo.Resource
 import java.util.concurrent.TimeUnit
@@ -17,7 +17,7 @@ import javax.inject.Singleton
 
 @Singleton
 class CurrencyRepository @Inject constructor(
-    private val currencyDao: CurrencyDao,
+    private val supportedCurrencyDao: SupportedCurrencyDao,
     private val currencyRateDao: CurrencyRateDao,
     private val appExecutors: AppExecutors,
     private val service: CurrencyLayerService
@@ -28,22 +28,22 @@ class CurrencyRepository @Inject constructor(
 
     private val rateLimiter = RateLimiter<String>(30, TimeUnit.MINUTES)
 
-    fun getCurrencies(): LiveData<Resource<List<Currency>>> {
-        return object : NetworkBoundResource<List<Currency>, CurrenciesResponse>(appExecutors) {
-            override fun saveCallResult(item: CurrenciesResponse) {
+    fun getCurrencies(): LiveData<Resource<List<SupportedCurrency>>> {
+        return object : NetworkBoundResource<List<SupportedCurrency>, ListResponse>(appExecutors) {
+            override fun saveCallResult(item: ListResponse) {
                 item.currencies?.let {
-                    val result = item.currencies.toList().map { e -> Currency(e.first, e.second) }
-                    currencyDao.insertCurrencies(result)
+                    val result = item.currencies.toList().map { e -> SupportedCurrency(e.first, e.second) }
+                    supportedCurrencyDao.insertCurrencies(result)
                 }
             }
 
-            override fun shouldFetch(data: List<Currency>?): Boolean {
+            override fun shouldFetch(data: List<SupportedCurrency>?): Boolean {
                 return data == null || data.isEmpty() || rateLimiter.shouldFetch(CURRENCIES_KEY)
             }
 
-            override fun loadFromDb() = currencyDao.getCurrencies()
+            override fun loadFromDb() = supportedCurrencyDao.getCurrencies()
 
-            override fun createCall() = service.getSupportedCurrencies()
+            override fun createCall() = service.getList()
 
             override fun onFetchFailed() {
                 rateLimiter.reset(CURRENCIES_KEY)
@@ -52,8 +52,8 @@ class CurrencyRepository @Inject constructor(
     }
 
     fun getCurrencyRateList(currencyCode: String): LiveData<Resource<List<CurrencyRate>>> {
-        return object : NetworkBoundResource<List<CurrencyRate>, QuotesResponse>(appExecutors) {
-            override fun saveCallResult(item: QuotesResponse) {
+        return object : NetworkBoundResource<List<CurrencyRate>, LiveResponse>(appExecutors) {
+            override fun saveCallResult(item: LiveResponse) {
                 item.quotes?.let {
                     val result = item.quotes.toList().map { e ->
                         CurrencyRate(
@@ -72,7 +72,7 @@ class CurrencyRepository @Inject constructor(
 
             override fun loadFromDb() = currencyRateDao.getCurrencyRateList(currencyCode)
 
-            override fun createCall() = service.getQuotes(currencyCode)
+            override fun createCall() = service.getLive(currencyCode)
 
             override fun onFetchFailed() {
                 rateLimiter.reset(currencyCode)

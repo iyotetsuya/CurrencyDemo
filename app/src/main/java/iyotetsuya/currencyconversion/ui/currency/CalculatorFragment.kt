@@ -12,10 +12,10 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.observe
 import iyotetsuya.currencyconversion.databinding.CalculatorFragmentBinding
 import iyotetsuya.currencyconversion.di.Injectable
-import iyotetsuya.currencyconversion.ui.common.CurrencyRateAdapter
+import iyotetsuya.currencyconversion.ui.common.ExchangeResultAdapter
 import iyotetsuya.currencyconversion.ui.common.RetryCallback
 import iyotetsuya.currencyconversion.util.autoCleared
-import iyotetsuya.currencyconversion.vo.Currency
+import iyotetsuya.currencyconversion.vo.SupportedCurrency
 import javax.inject.Inject
 
 class CalculatorFragment : Fragment(), Injectable {
@@ -40,23 +40,22 @@ class CalculatorFragment : Fragment(), Injectable {
                 viewModel.retry()
             }
         }
+        dataBinding.viewModel = viewModel
+        dataBinding.lifecycleOwner = viewLifecycleOwner
         binding = dataBinding
         return dataBinding.root
     }
 
-
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        binding.viewModel = viewModel
-        binding.lifecycleOwner = viewLifecycleOwner
         setSpinnerData()
         setResult()
     }
 
     private fun setSpinnerData() {
-        viewModel.supportedCurrencies.observe(viewLifecycleOwner) { resource ->
+        viewModel.supportedCurrencies.observe(this) { resource ->
             resource.data?.let {
-                val adapter = ArrayAdapter<Currency>(
+                val adapter = ArrayAdapter<SupportedCurrency>(
                     this.context!!,
                     android.R.layout.simple_spinner_item,
                     it
@@ -67,16 +66,13 @@ class CalculatorFragment : Fragment(), Injectable {
     }
 
     private fun setResult() {
-        val adapter = CurrencyRateAdapter()
+        val adapter = ExchangeResultAdapter()
         binding.currencyRateList.adapter = adapter
-        viewModel.currencyRateList.observe(viewLifecycleOwner) { resource ->
-            binding.resource = resource
-            resource.data?.let {
+        viewModel.exchangeResultList.observe(this) { list ->
+            list?.let {
                 adapter.submitList(it)
             }
         }
-
     }
-
 
 }

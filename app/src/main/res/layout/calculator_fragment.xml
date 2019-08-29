@@ -16,12 +16,10 @@
             android:layout_height="wrap_content"
             android:importantForAutofill="no"
             android:inputType="numberDecimal"
-
+            android:text="@={viewModel.input}"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
-
-        <!--        android:text="@{viewModel.inputValue}"-->
 
         <Spinner
             android:id="@+id/currency_spinner"
@@ -43,29 +41,11 @@
             android:layout_height="wrap_content"
             android:layout_marginEnd="@dimen/margin_small"
             android:padding="@dimen/padding_small"
-            android:text="@string/currency"
+            android:text="@string/Currency"
             app:layout_constraintBottom_toBottomOf="@id/currency_spinner"
             app:layout_constraintEnd_toStartOf="@id/currency_spinner"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="@id/currency_spinner" />
-
-
-        <!--        <TextView-->
-        <!--            android:id="@+id/selected_currency"-->
-        <!--            android:layout_width="wrap_content"-->
-        <!--            android:layout_height="wrap_content"-->
-        <!--            android:text="@{@string/selected_currency(currencyCode)}"-->
-        <!--            app:layout_constraintStart_toStartOf="parent"-->
-        <!--            app:layout_constraintTop_toTopOf="parent"-->
-        <!--            tools:text="@string/selected_currency" />-->
-
-        <!--        <androidx.recyclerview.widget.RecyclerView-->
-        <!--            android:id="@+id/currency_list"-->
-        <!--            android:layout_width="match_parent"-->
-        <!--            android:layout_height="match_parent"-->
-        <!--            android:clipToPadding="false"-->
-        <!--            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"-->
-        <!--            tools:listitem="@layout/currency_item" />-->
 
 
         <androidx.recyclerview.widget.RecyclerView
@@ -91,17 +71,10 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="@id/currency_rate_list"
-            app:resource="@{resource}" />
+            app:resource="@{viewModel.currencyRateResource}" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <data>
-
-        <import type="iyotetsuya.currencyconversion.vo.Resource" />
-
-
-        <variable
-            name="resource"
-            type="Resource" />
 
         <variable
             name="viewModel"

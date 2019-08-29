@@ -6,11 +6,11 @@
 //import androidx.recyclerview.widget.ListAdapter
 //import androidx.recyclerview.widget.RecyclerView
 //import iyotetsuya.currencyconversion.databinding.CurrencyItemBinding
-//import iyotetsuya.currencyconversion.vo.Currency
+//import iyotetsuya.currencyconversion.vo.SupportedCurrency
 //
-//class CurrencyAdapter : ListAdapter<Currency, CurrencyAdapter.ViewHolder>(CurrencyDiffCallback()) {
+//class CurrencyAdapter : ListAdapter<SupportedCurrency, CurrencyAdapter.ViewHolder>(CurrencyDiffCallback()) {
 //
-////    var onItemClick: ((Currency) -> Unit)? = null
+////    var onItemClick: ((SupportedCurrency) -> Unit)? = null
 //
 //    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
 //        return ViewHolder(
@@ -39,18 +39,18 @@
 //            }
 //        }
 //
-//        fun bind(item: Currency) {
+//        fun bind(item: SupportedCurrency) {
 //            binding.currency = item
 //        }
 //    }
 //}
 //
-//private class CurrencyDiffCallback : DiffUtil.ItemCallback<Currency>() {
-//    override fun areItemsTheSame(oldItem: Currency, newItem: Currency): Boolean {
+//private class CurrencyDiffCallback : DiffUtil.ItemCallback<SupportedCurrency>() {
+//    override fun areItemsTheSame(oldItem: SupportedCurrency, newItem: SupportedCurrency): Boolean {
 //        return oldItem.code == newItem.code
 //    }
 //
-//    override fun areContentsTheSame(oldItem: Currency, newItem: Currency): Boolean {
+//    override fun areContentsTheSame(oldItem: SupportedCurrency, newItem: SupportedCurrency): Boolean {
 //        return oldItem.name == newItem.name
 //    }
 //}
