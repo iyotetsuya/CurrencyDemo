@@ -2,7 +2,5 @@
     <string name="app_name">Currency Conversion</string>
     <string name="retry">Retry</string>
     <string name="unknown_error">Unknown Error</string>
-    <string name="selected_currency">Selected Currency: %1$s</string>
-    <string name="put_number_here">put number here</string>
     <string name="Currency">Currency:</string>
 </resources>
