@@ -5,9 +5,7 @@ apply plugin: 'kotlin-kapt'
 apply plugin: 'androidx.navigation.safeargs.kotlin'
 
 android {
-    dataBinding {
-        enabled = true
-    }
+
     compileSdkVersion 29
     buildToolsVersion "29.0.2"
     defaultConfig {
@@ -16,7 +14,7 @@ android {
         targetSdkVersion 29
         versionCode 1
         versionName "0.0.1"
-        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        testInstrumentationRunner "iyotetsuya.currencyconversion.util.CurrencyAppTestRunner"
         def properties = new Properties()
         properties.load(project.rootProject.file('local.properties').newDataInputStream())
         def CURRENCY_LAYER_KEY = properties.getProperty("currency_layer_key")
@@ -28,9 +26,16 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
+    dataBinding {
+        enabled = true
+    }
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
+    }
+    sourceSets {
+        androidTest.java.srcDirs += "src/test-common/java"
+        test.java.srcDirs += "src/test-common/java"
     }
     kotlinOptions {
         jvmTarget = "1.8"
@@ -62,11 +67,15 @@ dependencies {
     kapt "com.google.dagger:dagger-android-processor:$dagger_version"
     kapt "com.google.dagger:dagger-compiler:$dagger_version"
     kapt "com.android.databinding:compiler:$kotlin_version"
-    testImplementation "androidx.arch.core:core-testing:2.0.1"
+    testImplementation "androidx.arch.core:core-testing:$core_testing_version"
     testImplementation "junit:junit:$junit_version"
     testImplementation 'org.mockito:mockito-inline:2.13.0'
     testImplementation 'com.squareup.okhttp3:mockwebserver:3.8.1'
 
+    androidTestImplementation "androidx.arch.core:core-testing:$core_testing_version"
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0-alpha02'
     androidTestImplementation 'androidx.test:runner:1.3.0-alpha02'
+    androidTestImplementation 'androidx.test:rules:1.2.0'
+    androidTestImplementation 'androidx.test.ext:junit:1.1.1'
+
 }
