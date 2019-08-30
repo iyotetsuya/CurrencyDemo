@@ -22,11 +22,15 @@ class ApplicationModule {
     @Singleton
     @Provides
     fun provideCurrencyLayerService(): CurrencyLayerService {
-        val httpLogging = HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY)
+        val httpLoggingInterceptor = HttpLoggingInterceptor()
+        val httpLogging =
+            httpLoggingInterceptor.apply {
+                httpLoggingInterceptor.level = HttpLoggingInterceptor.Level.BODY
+            }
         val httpClientBuilder =
             OkHttpClient.Builder().addInterceptor(httpLogging).addInterceptor { chain ->
                 var request = chain.request()
-                val url = request.url().newBuilder()
+                val url = request.url.newBuilder()
                     .addQueryParameter("access_key", BuildConfig.CURRENCY_LAYER_KEY).build()
                 request = request.newBuilder().url(url).build()
                 chain.proceed(request)
