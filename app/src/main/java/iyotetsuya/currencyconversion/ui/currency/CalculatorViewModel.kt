@@ -12,9 +12,17 @@ class CalculatorViewModel @Inject constructor(currencyRepository: CurrencyReposi
     ViewModel() {
 
     private val selectedCurrency = MutableLiveData<SupportedCurrency>()
+    private val init = MutableLiveData<Boolean>()
 
     val supportedCurrencies: LiveData<Resource<List<SupportedCurrency>>> =
-        currencyRepository.getCurrencies()
+        Transformations.switchMap(init) { init ->
+            if (init == null) {
+                AbsentLiveData.create()
+            } else {
+                currencyRepository.getCurrencies()
+            }
+        }
+
 
     val currencyRateResource: LiveData<Resource<List<CurrencyRate>>> = Transformations
         .switchMap(selectedCurrency) { currency ->
@@ -26,19 +34,35 @@ class CalculatorViewModel @Inject constructor(currencyRepository: CurrencyReposi
         }
     var input = MutableLiveData<String>("0")
 
-    val exchangeResultList = Transformations.switchMap(input) { value ->
-        currencyRateResource.map { res ->
-            res.data?.map { currencyRate ->
-                ExchangeResult(
-                    currencyRate.target,
-                    currencyRate.rate * (value.toFloatOrNull() ?: 0F)
-                )
+    fun exchangeResult(): LiveData<List<ExchangeResult>?> {
+        return Transformations.switchMap(input) { value ->
+            currencyRateResource.map { res ->
+                res.data?.map { currencyRate ->
+                    ExchangeResult(
+                        currencyRate.target,
+                        currencyRate.rate * (value.toFloatOrNull() ?: 0F)
+                    )
+                }
             }
         }
     }
 
+    fun init() {
+        if (init.value == true) {
+            return
+        }
+        init.value = true
+    }
+
     fun onCurrencySelected(position: Int) {
-        selectedCurrency.value = supportedCurrencies.value?.data?.get(position)
+        val supportedCurrency = supportedCurrencies.value?.data?.get(position)
+        supportedCurrency?.let {
+            onCurrencySelected(it)
+        }
+    }
+
+    fun onCurrencySelected(currency: SupportedCurrency) {
+        selectedCurrency.value = currency
     }
 
     fun retry() {

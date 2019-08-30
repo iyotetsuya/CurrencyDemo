@@ -46,6 +46,7 @@ class CalculatorFragment : Fragment(), Injectable {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
+        viewModel.init()
         setSpinnerData()
         setResult()
     }
@@ -66,7 +67,7 @@ class CalculatorFragment : Fragment(), Injectable {
     private fun setResult() {
         val adapter = ExchangeResultAdapter()
         binding.currencyRateList.adapter = adapter
-        viewModel.exchangeResultList.observe(this) { list ->
+        viewModel.exchangeResult().observe(this) { list ->
             list?.let {
                 adapter.submitList(it)
             }
