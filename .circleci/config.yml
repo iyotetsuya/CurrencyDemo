@@ -3,6 +3,14 @@ version: 2.1
 orbs:
   android: circleci/android@1.0.3
 
+make_property_file: &make_property_file
+  run:
+    name: Make Property File
+    command: |
+      EXT_PROPERTIES=ext.properties
+      echo "CURRENCY_LAYER_KEY=$CURRENCY_LAYER_KEY" >> $EXT_PROPERTIES
+      echo "COVERALLS_REPO_TOKEN=$COVERALLS_REPO_TOKEN" >> $EXT_PROPERTIES
+
 jobs:
   unit-test:
     executor:
@@ -10,6 +18,7 @@ jobs:
       resource-class: xlarge
     steps:
       - checkout
+      - <<: *make_property_file
       - android/restore-gradle-cache
       - android/restore-build-cache
       - android/run-tests:
