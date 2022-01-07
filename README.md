@@ -1,3 +1,5 @@
+[![Coverage Status](https://coveralls.io/repos/github/iyotetsuya/CurrencyDemo/badge.svg?branch=feature/coveralls)](https://coveralls.io/github/iyotetsuya/CurrencyDemo?branch=feature/coveralls)
+
 # Demo
 This project is created for a code challenge and another purpose is practice how to write Kotlin, AndroidX component and test in an android project.
 

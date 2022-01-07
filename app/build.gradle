@@ -16,8 +16,8 @@ android {
         versionName "0.0.1"
         testInstrumentationRunner "iyotetsuya.currencyconversion.util.CurrencyAppTestRunner"
         def properties = new Properties()
-        properties.load(project.rootProject.file('local.properties').newDataInputStream())
-        def CURRENCY_LAYER_KEY = properties.getProperty("currency_layer_key")
+        properties.load(project.rootProject.file('ext.properties').newDataInputStream())
+        def CURRENCY_LAYER_KEY = properties.getProperty("CURRENCY_LAYER_KEY")
         buildConfigField("String", "CURRENCY_LAYER_KEY", "\"${CURRENCY_LAYER_KEY}\"")
     }
     buildTypes {
