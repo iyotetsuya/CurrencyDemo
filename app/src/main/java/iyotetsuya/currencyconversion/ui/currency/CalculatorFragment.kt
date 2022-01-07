@@ -8,11 +8,9 @@ import android.widget.ArrayAdapter
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.observe
 import iyotetsuya.currencyconversion.databinding.CalculatorFragmentBinding
 import iyotetsuya.currencyconversion.di.Injectable
 import iyotetsuya.currencyconversion.util.autoCleared
-import iyotetsuya.currencyconversion.vo.SupportedCurrency
 import javax.inject.Inject
 
 class CalculatorFragment : Fragment(), Injectable {
@@ -30,7 +28,7 @@ class CalculatorFragment : Fragment(), Injectable {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         val dataBinding = CalculatorFragmentBinding.inflate(inflater, container, false)
         dataBinding.currencyRateLoading.callback = object :
             RetryCallback {
@@ -54,7 +52,7 @@ class CalculatorFragment : Fragment(), Injectable {
     private fun setSpinnerData() {
         viewModel.supportedCurrencies.observe(this) { resource ->
             resource.data?.let {
-                val adapter = ArrayAdapter<SupportedCurrency>(
+                val adapter = ArrayAdapter(
                     this.context!!,
                     android.R.layout.simple_spinner_item,
                     it

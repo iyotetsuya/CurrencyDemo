@@ -32,7 +32,7 @@ class CalculatorViewModel @Inject constructor(currencyRepository: CurrencyReposi
                 currencyRepository.getCurrencyRateList(currency.code)
             }
         }
-    var input = MutableLiveData<String>("0")
+    var input = MutableLiveData("0")
 
     fun exchangeResult(): LiveData<List<ExchangeResult>?> {
         return Transformations.switchMap(input) { value ->
