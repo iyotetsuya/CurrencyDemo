@@ -1,0 +1,26 @@
+version: 2.1
+
+orbs:
+  android: circleci/android@1.0.3
+
+jobs:
+  unit-test:
+    executor:
+      name: android/android-machine
+      resource-class: xlarge
+    steps:
+      - checkout
+      - android/restore-gradle-cache
+      - android/restore-build-cache
+      - android/run-tests:
+          test-command: ./gradlew testDebug jacocoFullReport coverallsJacoco --stacktrace
+      - android/save-gradle-cache
+      - android/save-build-cache
+      - store_artifacts:
+          path: ./build/reports/jacoco/html/
+          destination: reports
+
+workflows:
+  test:
+    jobs:
+      - unit-test
