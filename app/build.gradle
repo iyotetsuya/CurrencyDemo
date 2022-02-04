@@ -1,17 +1,14 @@
 apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
-apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-kapt'
-apply plugin: 'androidx.navigation.safeargs.kotlin'
 
 android {
 
-    compileSdkVersion 29
-    buildToolsVersion "29.0.2"
+    compileSdkVersion 31
     defaultConfig {
         applicationId "iyotetsuya.currencyconversion"
         minSdkVersion 19
-        targetSdkVersion 29
+        targetSdkVersion 31
         versionCode 1
         versionName "0.0.1"
         testInstrumentationRunner "iyotetsuya.currencyconversion.util.CurrencyAppTestRunner"
@@ -19,6 +16,11 @@ android {
         properties.load(project.rootProject.file('ext.properties').newDataInputStream())
         def CURRENCY_LAYER_KEY = properties.getProperty("CURRENCY_LAYER_KEY")
         buildConfigField("String", "CURRENCY_LAYER_KEY", "\"${CURRENCY_LAYER_KEY}\"")
+        javaCompileOptions {
+            annotationProcessorOptions {
+                arguments = ["room.incremental": "true"]
+            }
+        }
     }
     buildTypes {
         release {
@@ -26,20 +28,21 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
-    dataBinding {
-        enabled = true
+    buildFeatures{
+        dataBinding = true
     }
     compileOptions {
-        sourceCompatibility JavaVersion.VERSION_1_8
-        targetCompatibility JavaVersion.VERSION_1_8
+        sourceCompatibility JavaVersion.VERSION_11
+        targetCompatibility JavaVersion.VERSION_11
     }
     sourceSets {
         androidTest.java.srcDirs += "src/test-common/java"
         test.java.srcDirs += "src/test-common/java"
     }
     kotlinOptions {
-        jvmTarget = "1.8"
+        jvmTarget = "11"
     }
+
 }
 
 dependencies {
@@ -51,8 +54,6 @@ dependencies {
     implementation "androidx.lifecycle:lifecycle-extensions:$lifecycle_version"
     implementation "androidx.lifecycle:lifecycle-livedata-ktx:$lifecycle_version"
     implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:$lifecycle_version"
-    implementation "androidx.navigation:navigation-fragment-ktx:$navigation_version"
-    implementation "androidx.navigation:navigation-ui-ktx:$navigation_version"
     implementation "androidx.recyclerview:recyclerview:$recyclerview_version"
     implementation "androidx.room:room-runtime:$room_version"
     implementation "com.google.code.gson:gson:$gson_version"
@@ -69,13 +70,13 @@ dependencies {
     kapt "com.android.databinding:compiler:$kotlin_version"
     testImplementation "androidx.arch.core:core-testing:$core_testing_version"
     testImplementation "junit:junit:$junit_version"
-    testImplementation 'org.mockito:mockito-inline:2.13.0'
+    testImplementation 'org.mockito:mockito-inline:4.3.1'
     testImplementation 'com.squareup.okhttp3:mockwebserver:3.8.1'
 
     androidTestImplementation "androidx.arch.core:core-testing:$core_testing_version"
-    androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0-alpha02'
-    androidTestImplementation 'androidx.test:runner:1.3.0-alpha02'
-    androidTestImplementation 'androidx.test:rules:1.2.0'
-    androidTestImplementation 'androidx.test.ext:junit:1.1.1'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.4.0'
+    androidTestImplementation 'androidx.test:runner:1.4.0'
+    androidTestImplementation 'androidx.test:rules:1.4.0'
+    androidTestImplementation 'androidx.test.ext:junit:1.1.3'
 
 }

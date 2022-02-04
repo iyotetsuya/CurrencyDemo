@@ -70,8 +70,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@id/currency_rate_list"
-            app:resource="@{viewModel.currencyRateResource}" />
+            app:layout_constraintTop_toTopOf="@id/currency_rate_list" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <data>

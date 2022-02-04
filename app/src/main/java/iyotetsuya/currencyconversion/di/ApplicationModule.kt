@@ -35,7 +35,6 @@ class ApplicationModule {
                 request = request.newBuilder().url(url).build()
                 chain.proceed(request)
             }
-
         return Retrofit.Builder()
             .baseUrl(HTTPS_API_HOST)
             .addConverterFactory(GsonConverterFactory.create())
