@@ -4,7 +4,7 @@ import androidx.lifecycle.LiveData
 import retrofit2.http.GET
 import retrofit2.http.Query
 
-const val HTTPS_API_HOST = "http://apilayer.net/api/"
+const val HTTPS_API_HOST = "http://api.currencylayer.com/"
 
 interface CurrencyLayerService {
     @GET("list")
