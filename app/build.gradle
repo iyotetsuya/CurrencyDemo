@@ -1,15 +1,14 @@
 apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-kapt'
-apply plugin: 'androidx.navigation.safeargs.kotlin'
 
 android {
 
-    compileSdkVersion 30
+    compileSdkVersion 31
     defaultConfig {
         applicationId "iyotetsuya.currencyconversion"
         minSdkVersion 19
-        targetSdkVersion 30
+        targetSdkVersion 31
         versionCode 1
         versionName "0.0.1"
         testInstrumentationRunner "iyotetsuya.currencyconversion.util.CurrencyAppTestRunner"
@@ -17,6 +16,11 @@ android {
         properties.load(project.rootProject.file('ext.properties').newDataInputStream())
         def CURRENCY_LAYER_KEY = properties.getProperty("CURRENCY_LAYER_KEY")
         buildConfigField("String", "CURRENCY_LAYER_KEY", "\"${CURRENCY_LAYER_KEY}\"")
+        javaCompileOptions {
+            annotationProcessorOptions {
+                arguments = ["room.incremental": "true"]
+            }
+        }
     }
     buildTypes {
         release {
@@ -38,6 +42,7 @@ android {
     kotlinOptions {
         jvmTarget = "11"
     }
+
 }
 
 dependencies {
@@ -49,8 +54,6 @@ dependencies {
     implementation "androidx.lifecycle:lifecycle-extensions:$lifecycle_version"
     implementation "androidx.lifecycle:lifecycle-livedata-ktx:$lifecycle_version"
     implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:$lifecycle_version"
-    implementation "androidx.navigation:navigation-fragment-ktx:$navigation_version"
-    implementation "androidx.navigation:navigation-ui-ktx:$navigation_version"
     implementation "androidx.recyclerview:recyclerview:$recyclerview_version"
     implementation "androidx.room:room-runtime:$room_version"
     implementation "com.google.code.gson:gson:$gson_version"

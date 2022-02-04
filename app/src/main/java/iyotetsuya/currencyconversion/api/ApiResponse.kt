@@ -3,7 +3,6 @@ package iyotetsuya.currencyconversion.api
 import retrofit2.Response
 import java.util.regex.Pattern
 
-@Suppress("unused")
 sealed class ApiResponse<T> {
     companion object {
         fun <T> create(error: Throwable): ApiErrorResponse<T> {
@@ -18,7 +17,7 @@ sealed class ApiResponse<T> {
                 } else {
                     ApiSuccessResponse(
                         body = body,
-                        linkHeader = response.headers().get("link")
+                        linkHeader = response.headers()["link"]
                     )
                 }
             } else {
@@ -56,7 +55,11 @@ data class ApiSuccessResponse<T>(
             while (matcher.find()) {
                 val count = matcher.groupCount()
                 if (count == 2) {
-                    links[matcher.group(2)] = matcher.group(1)
+                    val first: String? = matcher.group(1)
+                    val second: String? = matcher.group(2)
+                    if (first != null && second != null) {
+                        links[second] = first
+                    }
                 }
             }
             return links
