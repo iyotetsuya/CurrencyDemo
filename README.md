@@ -1,10 +1,8 @@
-[![Coverage Status](https://coveralls.io/repos/github/iyotetsuya/CurrencyDemo/badge.svg?branch=feature/coveralls)](https://coveralls.io/github/iyotetsuya/CurrencyDemo?branch=feature/coveralls)
-
-# Demo
-This project is created for a code challenge and another purpose is practice how to write Kotlin, AndroidX component and test in an android project.
+[![iyotetsuya](https://img.shields.io/circleci/build/github/iyotetsuya/CurrencyDemo)](https://circleci.com/gh/iyotetsuya/CurrencyDemo) [![Coverage Status](https://coveralls.io/repos/github/iyotetsuya/CurrencyDemo/badge.svg?branch=feature/coveralls)](https://coveralls.io/github/iyotetsuya/CurrencyDemo?branch=feature/coveralls) 
 
 ## Description
-Although I have been using Android for many years while writing this app, I haven't written an app that completely in Kotlin and AndroidX, so this app's architecture(MVVM) is used [GithubBrowserSample](https://github.com/googlesamples/android-architecture-components/tree/master/GithubBrowserSample) as refer.
+This project was originally uploaded as a technical interview assignment for a company. Considering that it is also very suitable as a demo material to test the technology and content I am interested in, it will be updated from time to time.
+
 
 ## Functionality
 - Able to select a currency from the supported list
@@ -12,9 +10,9 @@ Although I have been using Android for many years while writing this app, I have
 - Retry function when data fetch failed
 
 ## Setup
-Please get api key from [Currencylayer](https://currencylayer.com/documentation) and add it into local.properties file.
+Please get api key from [Currencylayer](https://currencylayer.com/documentation) and add it into ext.properties file.
 ```
-currency_layer_key=your_api_key
+CURRENCY_LAYER_KEY={your_api_key}
 ```
 
 ## Screenshot
