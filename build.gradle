@@ -115,10 +115,6 @@ task jacocoFullReport(type: JacocoReport, group: 'Coverage reports') {
         }
     }
 
-    doFirst {
-        executionData.setFrom files(executionData.findAll { it.exists() })
-    }
-
     coverallsJacoco {
         reportPath = "$buildDir/reports/jacoco/jacocoFullReport.xml"
         reportSourceSets = projects.jacocoReport.sourceDirectories.collect { it.getFiles() }.flatten()
