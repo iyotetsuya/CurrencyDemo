@@ -16,8 +16,8 @@ buildscript {
     ext.logging_version = '4.1.0'
     ext.safe_args_version = '2.3.5'
     ext.mockito_version = '2.22.0'
-    ext.junit_version = '4.12'
-    ext.core_testing_version = '2.0.1'
+    ext.junit_version = '4.13.2'
+    ext.core_testing_version = '2.1.0'
     repositories {
         google()
         mavenCentral()
